@@ -5,7 +5,7 @@
 The project features a completely decoupled architecture, keeping core data engineering operations isolated from the orchestration framework to maximize local testability and deployment flexibility.
 
 ---
-# Pipeline Architecture
+## Pipeline Architecture
 ```mermaid
 graph LR
     %% Define System Styles for Dark Theme
