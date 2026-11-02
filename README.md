@@ -5,6 +5,34 @@
 The project features a completely decoupled architecture, keeping core data engineering operations isolated from the orchestration framework to maximize local testability and deployment flexibility.
 
 ---
+```mermaid
+graph LR
+    %% Define System Styles
+    classDef source fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef airflow fill:#e4f2fe,stroke:#0275d8,stroke-width:2px;
+    classDef target fill:#e6f9f0,stroke:#5cb85c,stroke-width:2px;
+
+    %% Source Endpoint
+    API[aidevboard.com REST API]:::source
+
+    %% Airflow DAG Orchestration Boundary
+    subgraph Airflow_Orchestrator [Apache Airflow Dag Environment]
+        direction LR
+        Task1[1. Extract Task<br/>src/extract.py]:::airflow
+        Task2[2. Transform Task<br/>src/transform.py]:::airflow
+        Task3[3. Load Task<br/>src/load.py]:::airflow
+        
+        Task1 -->|XCom: Raw JSON| Task2
+        Task2 -->|XCom: Clean JSON| Task3
+    end
+
+    %% Data Warehouse Target
+    DB[(PostgreSQL Database<br/>Table: ai_dev_jobs)]:::target
+
+    %% External Connections
+    API -->|HTTP GET Requests| Task1
+    Task3 -->|Batch Upsert<br/>Psycopg2| DB
+```
 
 ##  Project Structure
 
