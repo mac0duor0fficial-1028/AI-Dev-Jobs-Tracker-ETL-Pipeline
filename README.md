@@ -6,38 +6,9 @@ The project features a completely decoupled architecture, keeping core data engi
 
 ---
 ## Pipeline Architecture
-```mermaid
-graph LR
-    %% Define System Styles for Dark Theme
-    classDef source fill:#1e1e24,stroke:#ffb703,stroke-width:2px,color:#fff;
-    classDef airflow fill:#111e2e,stroke:#00b4d8,stroke-width:2px,color:#fff;
-    classDef target fill:#14241c,stroke:#06d6a0,stroke-width:2px,color:#fff;
-    
-    %% Link Colors Override
-    linkStyle default stroke:#8d99ae,stroke-width:2px;
 
-    %% Source Endpoint
-    API[aidevboard.com REST API]:::source
+![AI-Dev-Jobs-Tracker-ETL-Pipeline](images/your-exported-diagram.svg)
 
-    %% Airflow DAG Orchestration Boundary
-    subgraph Airflow_Orchestrator [Apache Airflow Dag Environment]
-        direction LR
-        Task1[1. Extract Task<br/>src/extract.py]:::airflow
-        Task2[2. Transform Task<br/>src/transform.py]:::airflow
-        Task3[3. Load Task<br/>src/load.py]:::airflow
-        
-        Task1 -->|XCom: Raw JSON| Task2
-        Task2 -->|XCom: Clean JSON| Task3
-    end
-
-    %% Data Warehouse Target
-    DB[(PostgreSQL Database<br/>Table: ai_dev_jobs)]:::target
-
-    %% External Connections
-    API -->|HTTP GET Requests| Task1
-    Task3 -->|Batch Upsert<br/>Psycopg2| DB
-
-```
 
 ##  Project Structure
 
