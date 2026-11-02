@@ -5,12 +5,16 @@
 The project features a completely decoupled architecture, keeping core data engineering operations isolated from the orchestration framework to maximize local testability and deployment flexibility.
 
 ---
+# Pipeline Architecture
 ```mermaid
 graph LR
-    %% Define System Styles
-    classDef source fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef airflow fill:#e4f2fe,stroke:#0275d8,stroke-width:2px;
-    classDef target fill:#e6f9f0,stroke:#5cb85c,stroke-width:2px;
+    %% Define System Styles for Dark Theme
+    classDef source fill:#1e1e24,stroke:#ffb703,stroke-width:2px,color:#fff;
+    classDef airflow fill:#111e2e,stroke:#00b4d8,stroke-width:2px,color:#fff;
+    classDef target fill:#14241c,stroke:#06d6a0,stroke-width:2px,color:#fff;
+    
+    %% Link Colors Override
+    linkStyle default stroke:#8d99ae,stroke-width:2px;
 
     %% Source Endpoint
     API[aidevboard.com REST API]:::source
@@ -32,6 +36,7 @@ graph LR
     %% External Connections
     API -->|HTTP GET Requests| Task1
     Task3 -->|Batch Upsert<br/>Psycopg2| DB
+
 ```
 
 ##  Project Structure
