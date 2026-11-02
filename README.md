@@ -7,7 +7,7 @@ The project features a completely decoupled architecture, keeping core data engi
 ---
 ## Pipeline Architecture
 
-![AI-Dev-Jobs-Tracker-ETL-Pipeline](images/your-exported-diagram.svg)
+![AI-Dev-Jobs-Tracker-ETL-Pipeline](docs/images/AI-Dev-Jobs-Tracker-ETL-Pipeline-Architecture.png)
 
 
 ##  Project Structure
