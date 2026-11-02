@@ -1,0 +1,13 @@
+[project]
+name = "ai-job-tracker-etl-pipeline"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "apache-airflow>=3.3.2",
+    "pandas>=3.1.0",
+    "psycopg2-binary>=2.9.13",
+    "pytest>=9.2.0",
+    "requests>=2.34.2",
+]

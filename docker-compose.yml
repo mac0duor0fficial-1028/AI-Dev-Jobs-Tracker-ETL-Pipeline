@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow_secure_pass
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  airflow-webserver:
+    build: .
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow_secure_pass@postgres:5432/airflow
+      - PYTHONPATH=/opt/airflow
+      - DB_HOST=postgres
+      - DB_NAME=airflow
+      - DB_USER=airflow
+      - DB_PASSWORD=airflow_secure_pass
+      - DB_PORT=5432
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  airflow-scheduler:
+    build: .
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow_secure_pass@postgres:5432/airflow
+      - PYTHONPATH=/opt/airflow
+      - DB_HOST=postgres
+      - DB_NAME=airflow
+      - DB_USER=airflow
+      - DB_PASSWORD=airflow_secure_pass
+      - DB_PORT=5432
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+    command: scheduler
+
+volumes:
+  db_data:
